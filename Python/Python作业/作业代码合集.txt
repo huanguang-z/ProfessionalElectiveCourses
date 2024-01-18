@@ -1,0 +1,542 @@
+作业三
+
+def fact(inputmap):
+    # 获取地图的行数和列数
+    rows = len(inputmap)
+    cols = len(inputmap[0])
+    
+    # 创建一个二维数组用于记录累积胡萝卜重量
+    carrot_sum = [[0] * cols for _ in range(rows)]
+    
+    # 计算第一行和第一列的累积胡萝卜重量
+    for i in range(cols):
+        carrot_sum[0][i] = sum(inputmap[0][:i+1])
+    for i in range(1, rows):
+        carrot_sum[i][0] = sum(inputmap[j][0] for j in range(i+1))
+    
+    # 计算其它位置的累积胡萝卜重量
+    for i in range(1, rows):
+        for j in range(1, cols):
+            carrot_sum[i][j] = inputmap[i][j] + min(carrot_sum[i-1][j], carrot_sum[i][j-1])
+    
+    # 返回从起点到终点的最小累积胡萝卜重量
+    return carrot_sum[-1][-1]
+
+作业四
+
+def fact():
+	answer = []
+	# 字典dictionary
+	# 根据{'Beijing':'010','Guangzhou':'020'} 创建字典对象dict
+	mydict ={'Beijing':'010','Guangzhou':'020'}
+	answer.append(mydict.copy())
+
+	# 添加{'Shanghai':'021'}元素
+	mydict['Shanghai']='021'
+	answer.append(mydict.copy())
+
+	# 判断dict是否存在'Shenzhen'这个key，并将结果存到tag中
+	tag='Shenzhen'in mydict.keys()
+
+	return answer,tag
+
+def fact():
+	answer = []
+# 定义列表myList，值为'Google','Microsoft','Apple'
+	myList = ['Google','Microsoft','Apple']
+	answer.append(myList.copy())
+
+	# 在后面添加元素'Facebook'
+	myList.append('Facebook')
+	answer.append(myList.copy())
+
+# 插入元素'Oracle'在'Google'之后（即要插入的位置的索引为1）
+	myList.insert(1, 'Oracle')
+	answer.append(myList.copy())
+
+# 对myList进行排序
+	myList.sort()
+	answer.append(myList.copy())
+
+# 获取myList的长度
+	length = len(myList)
+
+# 切片操作
+# 获取myList列表中下标为2，3的元素，存到mylist1中
+	mylist1 = myList[2:4]
+	answer.append(mylist1.copy())
+
+# 获取myList列表中下标为1以后的元素，存到mylist2中	
+	mylist2=myList[1:]
+	answer.append(mylist2.copy())
+
+# 获取myList列表中下标为偶数的元素，存到mylist3中
+	mylist3=myList[::2]
+	answer.append(mylist3.copy())
+
+# 获取myList列表中下标为奇数的元素，存到mylist4中
+	mylist4=myList[1::2]
+	answer.append(mylist4.copy())
+
+# 删除尾部元素
+	myList.pop()
+	answer.append(myList.copy())
+
+# 删除索引为1的元素
+	myList.pop(1)
+	answer.append(myList.copy())
+
+	return answer,length
+
+def fact():
+	answer = []
+# 集合set
+# 创建集合s1，内有元素1，2，3，4
+	s1 = {1,2,3,4}
+	answer.append(s1.copy())
+
+# 创建集合s2，内有元素3，4，5，6，7
+	s2 ={3,4,5,6,7}
+	answer.append(s2.copy())
+
+# 集合s1添加元素5
+	s1.add(5)
+	answer.append(s1.copy())
+
+# 集合s1删除元素4
+	s1.remove(4)
+	answer.append(s1.copy())
+
+# 求出集合s1和集合s2的交集s4
+	s4 =s1.intersection(s2)
+	answer.append(s4.copy())
+
+# 求出集合s1和集合s2的并集s5
+	s5 =s1.union(s2)
+	answer.append(s5.copy())
+
+	return answer
+
+作业五：
+
+class fact:
+    total = 0  # 记录构造实例的个数
+    
+    def __init__(self):
+        fact.total += 1
+        self.stack = []
+        self.min = None
+        
+    def push(self, num):
+        self.stack.append(num)
+        if self.min is None or num < self.min:
+            self.min = num
+            
+    def pop(self):
+        if len(self.stack) == 0:
+            return None
+        else:
+            num = self.stack.pop()
+            if num == self.min:
+                self.min = min(self.stack) if len(self.stack) > 0 else None
+            return num
+        
+    def top(self):
+        return self.stack[-1] if len(self.stack) > 0 else None
+        
+    def getMin(self):
+        return self.min
+        
+    @classmethod
+    def getClassTotal(cls):
+        return cls.total
+    
+    @staticmethod
+    def getStaticTotal():
+        return fact.total
+
+作业六：
+
+import os
+import re
+
+def fact(path):
+    word_frequency = {}  # 用于存储单词频率的字典
+
+    # 遍历指定路径下的所有文件
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            # 使用指定编码打开文件
+            with open(file_path, 'r', encoding='ISO-8859-15') as f:
+                content = f.read()
+                # 将内容转换为小写字母
+                content = content.lower()
+                # 使用正则表达式匹配出所有单词
+                words = re.findall(r'\b[a-z]{3,}\b', content)
+                # 统计单词频率
+                for word in words:
+                    if len(word) > 2:  # 排除长度不大于2的单词
+                        if word not in word_frequency:
+                            word_frequency[word] = 1
+                        else:
+                            word_frequency[word] += 1
+
+    return word_frequency
+
+# 主函数
+if __name__ == "__main__":
+    # 示例
+    print(fact('C:\\Users\\Leoti\\Documents\\Tencent Files\\3107362992\\FileRecv\\email 2\\email'))
+
+
+作业七：
+
+import numpy as np
+
+def fact():
+    # 定义answer，用于检查结果是否正确,用于批改作业
+    answer=[]
+
+    # 创建一维的narray对象arr1，内有元素1，2，3，4，5，6，7，8，9要求使用arange()函数
+    arr1 = np.arange(1, 10)
+    # 将结果添加到answer，用于检查
+    answer.append(arr1.copy())
+
+    # 将arr1转换成3*3的矩阵arr2
+    arr2 = arr1.reshape(3, 3)
+    # 将结果添加到answer，用于检查
+    answer.append(arr2.copy())
+
+    # 使用linspace()函数，生成首位是0，末位是10，含5个数的等差数列arr3,元素类型为float
+    arr3 = np.linspace(0, 10, 5)
+    # 将结果添加到answer，用于检查
+    answer.append(arr3.copy())
+
+    # 创建3*4的全1矩阵arrOnes，元素类型为int
+    arrOnes = np.ones((3, 4), dtype=int)
+    # 将结果添加到answer，用于检查
+    answer.append(arrOnes.copy())
+
+    # 创建3*4的全0矩阵arrZeros，元素类型为int
+    arrZeros = np.zeros((3, 4), dtype=int)
+    # 将结果添加到answer，用于检查
+    answer.append(arrZeros.copy())
+
+    # 创建3阶单位矩阵arrUnit，元素类型为int
+    arrUnit = np.eye(3, dtype=int)
+    # 将结果添加到answer，用于检查
+    answer.append(arrUnit.copy())
+
+    # 创建一个3*3的矩阵matrix1，内有元素[[1,3,3],[6,5,6],[9,9,9]],元素类型为int
+    matrix1 = np.array([[1, 3, 3], [6, 5, 6], [9, 9, 9]], dtype=int)
+    # 将结果添加到answer，用于检查
+    answer.append(matrix1.copy())
+
+    # 获取矩阵matrix1的逆为matrix2
+    matrix2 = np.linalg.inv(matrix1)
+    # 将结果添加到answer，用于检查
+    answer.append(matrix2.copy())
+
+    # 打印矩阵matrix1中的最大值
+    maxOfMatrix1 = np.max(matrix1)
+    
+    # 打印矩阵matrix1每一列的最大值
+    ColumnMax = np.max(matrix1, axis=0)
+    # 将结果添加到answer，用于检查
+    answer.append(ColumnMax.copy())
+
+    # 打印矩阵matrix1每一行的平均值
+    LineMean = np.mean(matrix1, axis=1)
+    # 将结果添加到answer，用于检查
+    answer.append(LineMean.copy())
+
+    # 打印矩阵matrix1每一列的方差
+    variance = np.var(matrix1, axis=0)
+    # 将结果添加到answer，用于检查
+    answer.append(variance.copy())
+
+    #截取矩阵matrix1的第1，2行，存到matrix3
+    matrix3 = matrix1[:2, :]
+    # 将结果添加到answer，用于检查
+    answer.append(matrix3.copy())
+
+    # 截取矩阵matrix1的第1，2行，第2，3列,存到matrix4
+    matrix4 = matrix1[:2, 1:3]
+    # 将结果添加到answer，用于检查
+    answer.append(matrix4.copy())
+
+    # 截取矩阵matrix1中大于3的元素
+    maxList = matrix1[matrix1 > 3]
+    # 将结果添加到answer，用于检查
+    answer.append(maxList.copy())
+
+    return answer, maxOfMatrix1
+
+
+
+import numpy as np
+
+def fact():
+    # 定义answer，用于检查结果是否正确,用于批改作业
+    answer=[]
+
+    # 创建一维的narray对象arr1，内有元素1，2，3，4，5，6，7，8，9要求使用arange()函数
+    arr1 = np.arange(1, 10)
+    # 将结果添加到answer，用于检查
+    answer.append(arr1.copy())
+
+    # 将arr1转换成3*3的矩阵arr2
+    arr2 = arr1.reshape(3, 3)
+    # 将结果添加到answer，用于检查
+    answer.append(arr2.copy())
+
+    # 使用linspace()函数，生成首位是0，末位是10，含5个数的等差数列arr3,元素类型为float
+    arr3 = np.linspace(0, 10, 5)
+    # 将结果添加到answer，用于检查
+    answer.append(arr3.copy())
+
+    # 创建3*4的全1矩阵arrOnes，元素类型为int
+    arrOnes = np.ones((3, 4), dtype=int)
+    # 将结果添加到answer，用于检查
+    answer.append(arrOnes.copy())
+
+    # 创建3*4的全0矩阵arrZeros，元素类型为int
+    arrZeros = np.zeros((3, 4), dtype=int)
+    # 将结果添加到answer，用于检查
+    answer.append(arrZeros.copy())
+
+    # 创建3阶单位矩阵arrUnit，元素类型为int
+    arrUnit = np.eye(3, dtype=int)
+    # 将结果添加到answer，用于检查
+    answer.append(arrUnit.copy())
+
+    # 创建一个3*3的矩阵matrix1，内有元素[[1,3,3],[6,5,6],[9,9,9]],元素类型为int
+    matrix1 = np.array([[1, 3, 3], [6, 5, 6], [9, 9, 9]], dtype=int)
+    # 将结果添加到answer，用于检查
+    answer.append(matrix1.copy())
+
+    # 获取矩阵matrix1的逆为matrix2
+    matrix2 = np.linalg.inv(matrix1)
+    # 将结果添加到answer，用于检查
+    answer.append(matrix2.copy())
+
+    # 打印矩阵matrix1中的最大值
+    maxOfMatrix1 = np.max(matrix1)
+    
+    # 打印矩阵matrix1每一列的最大值
+    ColumnMax = np.max(matrix1, axis=0)
+    # 将结果添加到answer，用于检查
+    answer.append(ColumnMax.copy())
+
+    # 打印矩阵matrix1每一行的平均值
+    LineMean = np.mean(matrix1, axis=1)
+    # 将结果添加到answer，用于检查
+    answer.append(LineMean.copy())
+
+    # 打印矩阵matrix1每一列的方差
+    variance = np.var(matrix1, axis=0)
+    # 将结果添加到answer，用于检查
+    answer.append(variance.copy())
+
+    #截取矩阵matrix1的第1，2行，存到matrix3
+    matrix3 = matrix1[:2, :]
+    # 将结果添加到answer，用于检查
+    answer.append(matrix3.copy())
+
+    # 截取矩阵matrix1的第1，2行，第2，3列,存到matrix4
+    matrix4 = matrix1[:2, 1:3]
+    # 将结果添加到answer，用于检查
+    answer.append(matrix4.copy())
+
+    # 截取矩阵matrix1中大于3的元素
+    maxList = matrix1[matrix1 > 3]
+    # 将结果添加到answer，用于检查
+    answer.append(maxList.copy())
+
+    return answer, maxOfMatrix1
+
+
+
+作业八：
+
+
+import pandas as pd
+import numpy as np
+from numpy import nan as NA
+
+def fact():
+	answer = []
+	df1 = pd.DataFrame({'key': ['b', 'b', 'a', 'c', 'a', 'a', 'b'], 'data1': range(7)})
+	df2 = pd.DataFrame({'key': ['a', 'b', 'd'], 'data2': range(3)})
+
+# 指定key这一列取交集
+	dataframe1 = pd.merge(df1, df2, on='key', how='inner')
+
+	answer.append(dataframe1)
+
+# 取df1和df2的交集
+	dataframe2 = pd.merge(df1, df2, how='inner')
+
+	answer.append(dataframe2)
+
+# 取左连接，df1左连接df2
+	dataframe3 = pd.merge(df1, df2, on='key', how='left')
+
+	answer.append(dataframe3)
+
+	df3 = pd.DataFrame({"lkey": ["b", "b", "a", "c", "a", "a", "b"], "data1": range(7)})
+	df4 = pd.DataFrame({"rkey": ["a", "b", "d"], "data2": range(3)})
+
+# 取df3，df4的交集
+	dataframe4 = pd.merge(df3, df4, left_on='lkey', right_on='rkey')
+
+	answer.append(dataframe4)
+
+	s1 = pd.Series([0, 1], index=["a", "b"])
+	s2 = pd.Series([2, 3, 4], index=["c", "d", "e"])
+	s3 = pd.Series([5, 6], index=["f", "g"])
+
+# 将多个Series拼接成一个DataFrame,即一个Series就是DataFrame的一列数据
+	dataframe5 = pd.concat([s1, s2, s3], axis=1)
+
+	answer.append(dataframe5)
+
+
+	df5 = pd.DataFrame({"a": [1, NA, 5, NA], "b": [NA, 2, NA, 6], "c": range(2, 18, 4)})
+	df6 = pd.DataFrame({"a": [5, 4, NA, 3, 7], "b": [NA, 3, 4, 6, 8]})
+
+# 用df6的数据为df5中的数据打补丁
+	dataframe6 = df5.combine_first(df6)
+
+	answer.append(dataframe6)
+
+	data = pd.DataFrame(np.arange(6).reshape(2, 3), index=pd.Index(["上海", "北京"], name="省份"),
+                    columns=pd.Index([2011, 2012, 2013], name="年份"))
+# 将data的列所引转换到行索引
+	result1 = data.stack()
+
+	answer.append(result1)
+
+# 将result1的行索引转化为列索引
+	result2 = result1.unstack()
+
+	answer.append(result2)
+
+# 将result1的行索引转化为列索引，指定要转化为层次化索引的名称为"省份"
+	result3 = result1.unstack(level="省份")
+
+	answer.append(result3)
+
+	data1 = pd.DataFrame({"k1": ["one"] * 3 + ["two"] * 4, "k2": [1, 1, 2, 3, 3, 4, 4]})
+# 使用DataFrame的内置函数去除重复数据，默认保留第一次出现的值
+	result4 = data1.drop_duplicates()
+
+	answer.append(result4)
+
+	return answer
+
+
+
+
+from pandas import Series, DataFrame
+
+def fact():
+
+	answer = []
+# 创建字典data
+	data = {'state': ['Ohio', 'Ohio', 'Ohio', 'Nevada', 'Nevada'],
+        'year': [2000, 2001, 2002, 2001, 2002],
+        'pop': [1.5, 1.7, 3.6, 2.4, 2.9]}
+
+# 创建列表col，index1
+	col = ['year', 'state', 'pop', 'debt']
+	index1 = ['one', 'two', 'three', 'four', 'five']
+
+# 利用data创建DataFrame对象frame1,并指定该对象列为col，索引为index1
+	frame1 = DataFrame(data, columns=col, index=index1)
+	answer.append(frame1.copy())
+
+# 排序
+# 根据索引，对frame1进行降序排序，并指定轴为1
+	frame2 = frame1.sort_index(axis=1, ascending=False)
+	answer.append(frame2.copy())
+
+# 根据值，对frame1的year列进行排序(升序）并打印
+	frame3 = frame1.sort_values(by='year')
+	answer.append(frame3.copy())
+
+# 处理缺失数据
+# 对于frame1，只要有某行有NaN就全部删除
+	frame4 = frame1.dropna()
+	answer.append(frame4.copy())
+
+# 对于frame1，某行全部为NaN才删除
+	frame5 = frame1.dropna(how='all')
+	answer.append(frame5.copy())
+
+# 填充缺失数据
+# 对于frame1，将元素为NaN替换成0
+	frame6 = frame1.fillna(0)
+	answer.append(frame6.copy())
+
+	return answer
+
+
+
+
+from pandas import Series, DataFrame
+
+def fact():
+	answer =[]
+# 创建列表lst
+	lst = [4, 7, -5, 3]
+# 使用列表list生成Series对象obj
+	obj = Series(lst)
+	answer.append(obj.copy())
+
+# 创建数组index
+	index1 = ['d', 'b', 'a', 'c']
+
+# 创建数据为lst，索引为index1的Series对象obj2
+	obj2 = Series(lst, index=index1)
+	answer.append(obj2.copy())
+
+# 将obj2中索引值为d对应的值赋值为6
+	obj2['d'] = 6
+	answer.append(obj2.copy())
+
+# 将obj2中索引值为d对应的值存储到ans1中
+	ans1 = obj2['d']
+	answer.append(ans1)
+
+# 从obj2找出大于0的元素并存储到ans2中
+	ans2 = obj2[obj2 > 0]
+	answer.append(ans2)
+
+# 创建字典sdata
+	sdata = {'Ohio': 45000, 'Texas': 71000, 'Oregon': 16000, 'Utah': 5000}
+
+# 利用sdata生成Series对象obj3
+	obj3 = Series(sdata)
+	answer.append(obj3.copy())
+
+# 创建列表states
+	states = ['California', 'Ohio', 'Oregon', 'Texas']
+
+# 创建数据为sdata，索引为states的Series对象obj4
+	obj4 = Series(sdata, index=states)
+	answer.append(obj4.copy())
+
+# 将obj3和obj4进行相加，相同索引部分相加，存储到obj5
+	obj5 = obj3 + obj4
+	answer.append(obj5.copy())
+
+# 指定obj4的名字为population
+	obj4.name = 'population'
+	answer.append(obj4.copy())
+
+# 指定obj4的索引的名字为state
+	obj4.index.name = 'state'
+	answer.append(obj4.copy())
+	return answer
